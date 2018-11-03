@@ -1,15 +1,47 @@
 package pl.message.api.rest.message;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pl.message.api.rest.interfaces.ICUDController;
+import pl.message.api.rest.message.interfaces.IMessageController;
+import pl.message.api.rest.message.interfaces.IMessageSend;
 
-@Controller
-public class MessageController {
+@RestController
+public class MessageController implements IMessageController, ICUDController<MessageDTO>, IMessageSend {
 
-    public void getMessages(){}
-    public void getMessage(){}
-    public void create(){}
-    public void update(){}
-    public void delete(){}
-    public void send(){}
+    @Override
+    @PostMapping("/api/message/")
+    public ResponseEntity<?> create(@RequestBody MessageDTO message) {
+        return null;
+    }
 
+    @Override
+    @PutMapping("/api/message/")
+    public ResponseEntity<?> update(@RequestParam("id") Long messageId, @RequestBody MessageDTO model) {
+        return null;
+    }
+
+    @Override
+    @DeleteMapping("/api/message/")
+    public ResponseEntity<?> delete(@RequestParam("id")Long messageId) {
+        return null;
+    }
+
+    @Override
+    @GetMapping("/api/send/")
+    public ResponseEntity<?> send(@RequestParam("id")Long id) {
+        return null;
+    }
+
+    @Override
+    @GetMapping("/api/messages/")
+    public ResponseEntity<?> getMessages() {
+        return null;
+    }
+
+    @Override
+    @GetMapping("/api/message/")
+    public ResponseEntity<?> getMessage(@RequestParam(value = "title", required = false) String title, @RequestParam(value = "sender", required = false) String sender) {
+        return null;
+    }
 }
