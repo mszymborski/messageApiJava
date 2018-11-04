@@ -1,22 +1,25 @@
-package pl.message.api.rest.user;
+package pl.message.api.rest.user.impl;
 
-import pl.message.api.rest.message.Message;
-import pl.message.api.rest.interfaces.IDtoCreator;
+import pl.message.api.rest.message.impl.Message;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
-public class User implements IDtoCreator<UserDTO> {
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
     private String name;
     private String surname;
     private String email;
+    private LocalDate created;
+    @Column(name = "last_modified")
+    private LocalDate lastModified;
 
     @ManyToMany(fetch = FetchType.LAZY,
         cascade = {
@@ -29,20 +32,21 @@ public class User implements IDtoCreator<UserDTO> {
     public User() {
     }
 
-    public User(int id, String name, String surname, String email) {
+    public User(Long id, String name, String surname, String email) {
         Id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.created = LocalDate.now();
+        this.lastModified = LocalDate.now();
     }
 
-    public UserDTO getDTO(){
-        UserDTO dto = new UserDTO(name,surname,email);
-        return dto;
-    }
-
-    public long getId() {
+    public Long getId() {
         return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getName() {
@@ -67,6 +71,30 @@ public class User implements IDtoCreator<UserDTO> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
+    public LocalDate getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(LocalDate lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public List<Message> getRecipeMessage() {
+        return recipeMessage;
+    }
+
+    public void setRecipeMessage(List<Message> recipeMessage) {
+        this.recipeMessage = recipeMessage;
     }
 
     @Override

@@ -1,22 +1,25 @@
-package pl.message.api.rest.message;
+package pl.message.api.rest.message.impl;
 
-import pl.message.api.rest.user.User;
-import pl.message.api.rest.interfaces.IDtoCreator;
+import pl.message.api.rest.user.impl.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "message")
-public class Message implements IDtoCreator<MessageDTO> {
+public class Message{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String title;
     private String content;
+    private MessageStatus status;
+    private LocalDate created;
+    @Column(name = "last_modified")
+    private LocalDate lastModified;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "senderId", nullable = false)
     private User sender;
@@ -29,28 +32,22 @@ public class Message implements IDtoCreator<MessageDTO> {
     public Message() {
     }
 
-    public Message(long id, String title, String content, User sender, List<User> recipients) {
+    public Message(Long id, String title, String content, User sender, List<User> recipients) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.sender = sender;
         this.recipients = recipients;
+        this.status = MessageStatus.CREATED;
+        this.created = LocalDate.now();
+        this.lastModified = LocalDate.now();
     }
 
-    public MessageDTO getDTO(){
-        MessageDTO dto = new MessageDTO();
-        dto.setTitle(title);
-        dto.setContent(content);
-        dto.setSender(sender.getEmail());
-        dto.setRecipients(recipients.stream().map(u->u.getEmail()).collect((Collectors.toList())));
-        return dto;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,6 +81,30 @@ public class Message implements IDtoCreator<MessageDTO> {
 
     public void setRecipients(List<User> recipients) {
         this.recipients = recipients;
+    }
+
+    public MessageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MessageStatus status) {
+        this.status = status;
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
+    public LocalDate getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(LocalDate lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override
