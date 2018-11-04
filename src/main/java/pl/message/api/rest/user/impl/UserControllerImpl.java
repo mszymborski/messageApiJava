@@ -1,20 +1,26 @@
-package pl.message.api.rest.user;
+package pl.message.api.rest.user.impl;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.message.api.rest.interfaces.ICUDController;
-import pl.message.api.rest.user.interfaces.IUserController;
+import pl.message.api.rest.interfaces.CUDController;
+import pl.message.api.rest.user.interfaces.UserController;
 
 @RestController
-public class UserController implements ICUDController<UserDTO>, IUserController {
+public class UserControllerImpl implements CUDController<UserDTO>, UserController {
 
     @GetMapping(value = "/api/users/")
     public ResponseEntity<?> getUsers(){
         return null;
     }
 
+    @Override
+    @GetMapping(value = "/api/users/")
+    public ResponseEntity<?> getUsersByName(@RequestParam(value = "email") String name) {
+        return null;
+    }
+
     @GetMapping(value = "/api/user/")
-    public ResponseEntity<?> getUser(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "email", required = false) String email){
+    public ResponseEntity<?> getUser(@RequestParam(value = "email") String email){
         return null;
     }
 

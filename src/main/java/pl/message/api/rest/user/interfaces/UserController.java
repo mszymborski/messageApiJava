@@ -2,9 +2,10 @@ package pl.message.api.rest.user.interfaces;
 
 import org.springframework.http.ResponseEntity;
 
-public interface IUserController {
+public interface UserController {
 
     ResponseEntity<?> getUsers();
-    ResponseEntity<?> getUser(String name, String email);
+    ResponseEntity<?> getUsersByName(String name);
+    ResponseEntity<?> getUser(String email);
 
 }
