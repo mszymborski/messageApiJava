@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 public interface MessageController {
 
     ResponseEntity<?> getMessages();
-    ResponseEntity<?> getMessageByTitle(String title);
-    ResponseEntity<?> getMessageBySender(String email);
+    ResponseEntity<?> getMessagesByTitle(String title);
+    ResponseEntity<?> getMessagesBySender(String email);
 
 }
