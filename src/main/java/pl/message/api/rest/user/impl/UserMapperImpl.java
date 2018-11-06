@@ -1,7 +1,9 @@
 package pl.message.api.rest.user.impl;
 
+import org.springframework.stereotype.Component;
 import pl.message.api.rest.interfaces.Mapper;
 
+@Component
 public class UserMapperImpl implements Mapper<User, UserDTO> {
 
     @Override
