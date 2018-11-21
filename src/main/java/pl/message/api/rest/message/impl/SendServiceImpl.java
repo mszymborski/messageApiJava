@@ -9,8 +9,12 @@ import pl.message.api.rest.message.interfaces.SendService;
 @Service
 public class SendServiceImpl implements SendService {
 
+    private final MessageService messageService;
+
     @Autowired
-    MessageService messageService;
+    public SendServiceImpl(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @Override
     public void sendMessage(Long messageId) throws NotFoundMessageException {

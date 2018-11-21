@@ -23,10 +23,14 @@ public class UserControllerImpl implements CUDController<UserDTO>, UserControlle
 
     private Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);
 
+    private final UserService userService;
+    private final MessagesUtil messagesUtil;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    private MessagesUtil messagesUtil;
+    public UserControllerImpl(UserService userService, MessagesUtil messagesUtil) {
+        this.userService = userService;
+        this.messagesUtil = messagesUtil;
+    }
 
     @GetMapping
     public ResponseEntity<?> getUsers(){

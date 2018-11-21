@@ -24,12 +24,16 @@ import java.util.stream.Collectors;
 public class MessageServiceImpl implements MessageService {
 
 
+    private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
+    private final Mapper<Message,MessageDTO> mapper;
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    MessageRepository messageRepository;
-    @Autowired
-    Mapper<Message,MessageDTO> mapper;
+    public MessageServiceImpl(UserRepository userRepository, MessageRepository messageRepository, Mapper<Message, MessageDTO> mapper) {
+        this.userRepository = userRepository;
+        this.messageRepository = messageRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public MessageDTO createMessage(MessageDTO messageDTO) throws DataAccessException {

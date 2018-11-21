@@ -12,8 +12,12 @@ import java.util.stream.Collectors;
 @Component
 public class MessageMapperImpl implements Mapper<Message, MessageDTO> {
 
+    private final Mapper<User, UserDTO> userMapper;
+
     @Autowired
-    private Mapper<User, UserDTO> userMapper;
+    public MessageMapperImpl(Mapper<User, UserDTO> userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public MessageDTO getDTO(Message message) {

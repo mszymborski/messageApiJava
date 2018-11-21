@@ -2,10 +2,10 @@ package pl.message.api.rest.message.impl;
 
 import pl.message.api.rest.user.impl.UserDTO;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class MessageDTO implements Serializable {
 
@@ -101,6 +101,27 @@ public class MessageDTO implements Serializable {
 
     public void setLastModified(LocalDate lastModified) {
         this.lastModified = lastModified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MessageDTO)) return false;
+        MessageDTO dto = (MessageDTO) o;
+        return Objects.equals(getId(), dto.getId()) &&
+                Objects.equals(getTitle(), dto.getTitle()) &&
+                Objects.equals(getContent(), dto.getContent()) &&
+                Objects.equals(getSender(), dto.getSender()) &&
+                Objects.equals(getRecipients(), dto.getRecipients()) &&
+                getStatus() == dto.getStatus() &&
+                Objects.equals(getCreated(), dto.getCreated()) &&
+                Objects.equals(getLastModified(), dto.getLastModified());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getTitle(), getContent(), getSender(), getRecipients(), getStatus(), getCreated(), getLastModified());
     }
 
     @Override

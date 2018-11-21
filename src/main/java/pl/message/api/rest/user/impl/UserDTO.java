@@ -3,6 +3,7 @@ package pl.message.api.rest.user.impl;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class UserDTO {
 
@@ -82,5 +83,33 @@ public class UserDTO {
 
     public void setLastModified(LocalDate lastModified) {
         this.lastModified = lastModified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDTO)) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(getName(), userDTO.getName()) &&
+                Objects.equals(getSurname(), userDTO.getSurname()) &&
+                Objects.equals(getEmail(), userDTO.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getName(), getSurname(), getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", created=" + created +
+                ", lastModified=" + lastModified +
+                '}';
     }
 }

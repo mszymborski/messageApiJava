@@ -20,10 +20,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final Mapper<User,UserDTO> mapper;
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    Mapper<User,UserDTO> mapper;
+    public UserServiceImpl(UserRepository userRepository, Mapper<User, UserDTO> mapper) {
+        this.userRepository = userRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws DataAccessException, EmailDuplicateException {
@@ -99,6 +103,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkEmailDuplicate(String email) throws EmailDuplicateException {
-        userRepository.getByEmail(email).orElseThrow(() -> new EmailDuplicateException(email));
+        if(userRepository.getByEmail(email).isPresent()){
+            throw new EmailDuplicateException(email);
+        }
     }
 }

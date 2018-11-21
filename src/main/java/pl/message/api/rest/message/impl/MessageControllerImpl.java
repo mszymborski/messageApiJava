@@ -22,14 +22,18 @@ public class MessageControllerImpl implements MessageController, CUDController<M
 
     private static final Logger logger = LoggerFactory.getLogger(MessageControllerImpl.class);
 
+    private final MessageService messageService;
+    private final MessageValidator messageValidator;
+    private final SendService sendService;
+    private final MessagesUtil messagesUtil;
+
     @Autowired
-    MessageService messageService;
-    @Autowired
-    MessageValidator messageValidator;
-    @Autowired
-    SendService sendService;
-    @Autowired
-    MessagesUtil messagesUtil;
+    public MessageControllerImpl(MessageService messageService, MessageValidator messageValidator, SendService sendService, MessagesUtil messagesUtil) {
+        this.messageService = messageService;
+        this.messageValidator = messageValidator;
+        this.sendService = sendService;
+        this.messagesUtil = messagesUtil;
+    }
 
     @Override
     @PostMapping

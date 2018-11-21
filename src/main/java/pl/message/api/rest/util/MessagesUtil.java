@@ -9,8 +9,12 @@ import java.util.Locale;
 @Component
 public class MessagesUtil {
 
+    private final MessageSource messageSource;
+
     @Autowired
-    private MessageSource messageSource;
+    public MessagesUtil(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public String getMessage(String property){
         return messageSource.getMessage(property, null, Locale.getDefault());
