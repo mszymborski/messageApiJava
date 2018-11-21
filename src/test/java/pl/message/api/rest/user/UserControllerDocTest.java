@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.message.api.rest.user.impl.UserDTO;
+import pl.message.api.rest.user.interfaces.UserService;
 
+import java.time.LocalDate;
+
+import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -22,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
+//TODO Prepare test for all controller services
 public class UserControllerDocTest {
 
     @Autowired
@@ -30,12 +36,21 @@ public class UserControllerDocTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private UserService userService;
+
     @Test
     public void userCreateExample() throws Exception {
 
         UserDTO userModel = new UserDTO("ExampleName","ExampleSurname", "example@email");
+        UserDTO userOut = new UserDTO(userModel);
+        userOut.setId(1L);
+        userOut.setCreated(LocalDate.now());
+        userOut.setLastModified(LocalDate.now());
 
         String userString = this.objectMapper.writeValueAsString(userModel);
+
+        given(userService.createUser(userModel)).willReturn(userOut);
 
         this.mockMvc.perform(post("/api/user").contentType(MediaType.APPLICATION_JSON)
                                         .content(userString))
