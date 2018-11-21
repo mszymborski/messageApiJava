@@ -1,9 +1,9 @@
 package pl.message.api.rest.message.interfaces;
 
-import pl.message.api.rest.message.impl.Message;
+import pl.message.api.rest.exceptions.NotFoundMessageException;
 
 public interface SendService {
 
-    void sendMessage(Message message);
+    void sendMessage(Long messageId) throws NotFoundMessageException;
 
 }

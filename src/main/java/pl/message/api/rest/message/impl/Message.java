@@ -32,6 +32,13 @@ public class Message{
     public Message() {
     }
 
+    public Message(String title, String content, User sender, List<User> recipients) {
+        this.title = title;
+        this.content = content;
+        this.sender = sender;
+        this.recipients = recipients;
+    }
+
     public Message(Long id, String title, String content, User sender, List<User> recipients) {
         this.id = id;
         this.title = title;

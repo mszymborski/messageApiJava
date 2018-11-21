@@ -7,16 +7,24 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long id;
-    @NotNull
     private String name;
     private String surname;
     @Email
-    @NotNull
     private String email;
     private LocalDate created;
     private LocalDate lastModified;
 
     public UserDTO() {
+    }
+
+    public UserDTO(String name, String surname, @Email String email) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+
+    public UserDTO(UserDTO userDTO) {
+        this(userDTO.name, userDTO.surname, userDTO.email);
     }
 
     public UserDTO(Long id, @NotNull String name, String surname, @Email @NotNull String email, LocalDate created, LocalDate lastModified) {

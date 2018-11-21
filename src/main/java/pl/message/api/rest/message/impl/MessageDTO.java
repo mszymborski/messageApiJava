@@ -1,5 +1,7 @@
 package pl.message.api.rest.message.impl;
 
+import pl.message.api.rest.user.impl.UserDTO;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,8 +12,8 @@ public class MessageDTO implements Serializable {
     private Long id;
     private String title;
     private String content;
-    private String sender;
-    private List<String> recipients;
+    private UserDTO sender;
+    private List<UserDTO> recipients;
     private MessageStatus status;
     private LocalDate created;
     private LocalDate lastModified;
@@ -19,7 +21,14 @@ public class MessageDTO implements Serializable {
     public MessageDTO() {
     }
 
-    public MessageDTO(Long id, String title, String content, String sender, List<String> recipients, MessageStatus status, LocalDate created, LocalDate lastModified) {
+    public MessageDTO(String title, String content, UserDTO sender, List<UserDTO> recipients) {
+        this.title = title;
+        this.content = content;
+        this.sender = sender;
+        this.recipients = recipients;
+    }
+
+    public MessageDTO(Long id, String title, String content, UserDTO sender, List<UserDTO> recipients, MessageStatus status, LocalDate created, LocalDate lastModified) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -54,19 +63,19 @@ public class MessageDTO implements Serializable {
         this.content = content;
     }
 
-    public String getSender() {
+    public UserDTO getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(UserDTO sender) {
         this.sender = sender;
     }
 
-    public List<String> getRecipients() {
+    public List<UserDTO> getRecipients() {
         return recipients;
     }
 
-    public void setRecipients(List<String> recipients) {
+    public void setRecipients(List<UserDTO> recipients) {
         this.recipients = recipients;
     }
 
@@ -92,5 +101,19 @@ public class MessageDTO implements Serializable {
 
     public void setLastModified(LocalDate lastModified) {
         this.lastModified = lastModified;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", sender='" + sender + '\'' +
+                ", recipients=" + recipients +
+                ", status=" + status +
+                ", created=" + created +
+                ", lastModified=" + lastModified +
+                '}';
     }
 }
